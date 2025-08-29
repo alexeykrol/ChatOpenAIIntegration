@@ -3,9 +3,6 @@ import { useStore } from '../store/useStore';
 import { 
   Plus, 
   MessageSquare, 
-  Settings, 
-  User,
-  LogOut, 
   Edit2, 
   Trash2, 
   Check, 
@@ -14,6 +11,8 @@ import {
   Download
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { Profile } from './Profile';
+import { ProfileScreen } from './ProfileScreen';
 
 export const Sidebar: React.FC = () => {
   const {
@@ -32,6 +31,7 @@ export const Sidebar: React.FC = () => {
 
   const [editingChatId, setEditingChatId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
+  const [showProfileScreen, setShowProfileScreen] = useState(false);
 
   const handleCreateChat = async () => {
     try {
@@ -66,9 +66,6 @@ export const Sidebar: React.FC = () => {
     }
   };
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-  };
 
   const handleExportChat = async (chatId: string, chatTitle: string) => {
     try {
@@ -233,23 +230,17 @@ export const Sidebar: React.FC = () => {
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
-        <button
-          onClick={toggleSettings}
-          className="w-full flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 px-3 py-2 rounded-lg transition-colors"
-        >
-          <Settings className="w-4 h-4" />
-          Settings
-        </button>
-        
-        <button
-          onClick={handleSignOut}
-          className="w-full flex items-center gap-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-3 py-2 rounded-lg transition-colors"
-        >
-          <LogOut className="w-4 h-4" />
-          Sign Out
-        </button>
+      <div className="p-4 border-t border-gray-200 dark:border-gray-700">
+        <Profile 
+          onProfileClick={() => setShowProfileScreen(true)}
+          onSettingsClick={toggleSettings}
+        />
       </div>
+
+      {/* Profile Screen Modal */}
+      {showProfileScreen && (
+        <ProfileScreen onClose={() => setShowProfileScreen(false)} />
+      )}
     </div>
   );
 };

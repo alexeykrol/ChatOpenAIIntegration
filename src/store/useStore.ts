@@ -299,7 +299,7 @@ export const useStore = create<AppState>((set, get) => ({
     const { user } = get();
     if (!user) return;
 
-    let { data: settingsData, error } = await supabase
+    const { data: settingsData } = await supabase
       .from('user_settings')
       .select('*')
       .eq('user_id', user.id)
