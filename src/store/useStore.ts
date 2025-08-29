@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { User } from '@supabase/supabase-js';
 import { supabase, Database } from '../lib/supabase';
 import { OpenAIService, TokenUsage } from '../lib/openai';
+import { encryption } from '../lib/encryption';
 
 type Chat = Database['public']['Tables']['chats']['Row'] & {
   token_usage?: TokenUsage;
@@ -325,6 +326,11 @@ export const useStore = create<AppState>((set, get) => ({
     }
 
     if (data) {
+      // Decrypt API key when loading from database
+      if (data.openai_api_key) {
+        data.openai_api_key = encryption.decrypt(data.openai_api_key);
+      }
+      
       set({ settings: data });
       if (data.openai_api_key) {
         get().openaiService.setApiKey(data.openai_api_key);
@@ -336,9 +342,15 @@ export const useStore = create<AppState>((set, get) => ({
     const { user, settings } = get();
     if (!user || !settings) return;
 
+    // Encrypt API key before saving to database
+    const settingsToSave = { ...newSettings };
+    if (settingsToSave.openai_api_key) {
+      settingsToSave.openai_api_key = encryption.encrypt(settingsToSave.openai_api_key);
+    }
+
     const { error } = await supabase
       .from('user_settings')
-      .update(newSettings)
+      .update(settingsToSave)
       .eq('user_id', user.id);
 
     if (!error) {

@@ -30,7 +30,8 @@ class SimpleEncryption {
         encryptedHex += xorResult.toString(16).padStart(2, '0');
       }
       return encryptedHex;
-    } catch {
+    } catch (error) {
+      console.error('Encryption error:', error);
       return text; // Fallback to original if encryption fails
     }
   }
@@ -44,13 +45,28 @@ class SimpleEncryption {
       for (let i = 0; i < encryptedText.length; i += 2) {
         const hexByte = encryptedText.substr(i, 2);
         const encryptedByte = parseInt(hexByte, 16);
+        
+        // Check if parsing was successful
+        if (isNaN(encryptedByte)) {
+          console.warn('Invalid hex byte:', hexByte);
+          return encryptedText; // Return original if can't decrypt
+        }
+        
         const keyChar = this.key.charCodeAt((i / 2) % this.key.length);
         decrypted += String.fromCharCode(encryptedByte ^ keyChar);
       }
       return decrypted;
-    } catch {
+    } catch (error) {
+      console.error('Decryption error:', error);
       return encryptedText; // Fallback to original if decryption fails
     }
+  }
+
+  // Test method to verify encryption/decryption works
+  test(text: string): boolean {
+    const encrypted = this.encrypt(text);
+    const decrypted = this.decrypt(encrypted);
+    return text === decrypted;
   }
 }
 

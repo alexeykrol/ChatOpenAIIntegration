@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from '../store/useStore';
 import { X, Key, Palette, Sliders, Eye, EyeOff, Check, AlertCircle } from 'lucide-react';
 import { OpenAIService } from '../lib/openai';
+import { encryption } from '../lib/encryption';
 
 export const Settings: React.FC = () => {
   const { settings, updateSettings, toggleSettings } = useStore();
@@ -60,6 +61,15 @@ export const Settings: React.FC = () => {
 
   const handleSave = async () => {
     if (keyValid === false) return;
+    
+    // Test encryption before saving
+    if (formData.openai_api_key) {
+      const testResult = encryption.test(formData.openai_api_key);
+      if (!testResult) {
+        console.error('Encryption test failed');
+        return;
+      }
+    }
     
     await updateSettings(formData);
     
@@ -132,6 +142,11 @@ export const Settings: React.FC = () => {
                 </button>
               </div>
             </div>
+            {formData.openai_api_key && (
+              <div className="mt-1 text-xs text-green-600 dark:text-green-400">
+                🔒 API key will be encrypted before storage
+              </div>
+            )}
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
               Get your API key from{' '}
               <a
