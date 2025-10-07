@@ -47,12 +47,15 @@ export const Settings: React.FC = () => {
   };
 
   const handleApiKeyChange = (value: string) => {
-    setFormData(prev => ({ ...prev, openai_api_key: value }));
+    // Input sanitization - remove any potentially dangerous characters
+    const sanitizedValue = value.replace(/[<>\"']/g, '');
+
+    setFormData(prev => ({ ...prev, openai_api_key: sanitizedValue }));
     setKeyValid(null);
-    
+
     // Debounce validation
     const timeoutId = setTimeout(() => {
-      validateApiKey(value);
+      validateApiKey(sanitizedValue);
     }, 1000);
 
     return () => clearTimeout(timeoutId);

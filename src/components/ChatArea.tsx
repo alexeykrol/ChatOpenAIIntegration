@@ -43,9 +43,24 @@ export const ChatArea: React.FC = () => {
     e.preventDefault();
     if (!input.trim() || isGenerating || !settings?.openai_api_key) return;
 
+    // Input validation and sanitization
     const message = input.trim();
+
+    // Validate message length
+    if (message.length > 10000) {
+      console.error('Message too long. Maximum 10,000 characters allowed.');
+      return;
+    }
+
+    // Basic XSS prevention - check for suspicious patterns
+    const suspiciousPatterns = /<script[^>]*>.*?<\/script>/gi;
+    if (suspiciousPatterns.test(message)) {
+      console.error('Invalid input detected.');
+      return;
+    }
+
     setInput('');
-    
+
     // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';

@@ -17,22 +17,37 @@ export const Auth: React.FC = () => {
     setError('');
     setMessage('');
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password length for login/signup
+    if (mode !== 'reset' && password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      setLoading(false);
+      return;
+    }
+
     try {
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({
-          email,
+          email: email.trim(),
           password,
         });
         if (error) throw error;
       } else if (mode === 'signup') {
         const { error } = await supabase.auth.signUp({
-          email,
+          email: email.trim(),
           password,
         });
         if (error) throw error;
       } else if (mode === 'reset') {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: 'https://chatgpt-clone-with-o-9p2q.bolt.host/',
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+          redirectTo: window.location.origin,
         });
         if (error) throw error;
         setMessage('Password reset link has been sent to your email');
