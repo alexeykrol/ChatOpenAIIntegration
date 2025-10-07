@@ -43,8 +43,18 @@ export const ChatArea: React.FC = () => {
     e.preventDefault();
     if (!input.trim() || isGenerating || !settings?.openai_api_key) return;
 
-    // Sanitize input: trim whitespace and limit length
-    const message = input.trim().slice(0, 10000); // Limit to 10k characters
+    const message = input.trim();
+
+    // Input validation and sanitization
+    const MAX_MESSAGE_LENGTH = 10000;
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      console.error('Message too long');
+      return;
+    }
+
+    // Sanitize message - remove any potentially dangerous control characters
+    const sanitizedMessage = message.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/g, '');
+
     setInput('');
 
     // Reset textarea height
@@ -52,7 +62,7 @@ export const ChatArea: React.FC = () => {
       textareaRef.current.style.height = 'auto';
     }
 
-    await sendMessage(message);
+    await sendMessage(sanitizedMessage);
   };
 
   const handleCopyMessage = async (messageId: string, content: string) => {

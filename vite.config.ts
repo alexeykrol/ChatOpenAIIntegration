@@ -20,9 +20,8 @@ export default defineConfig({
     },
   },
   build: {
-    // Generate source maps for better debugging but keep them secure
-    sourcemap: false,
-    // Minify output for production
+    // Enhanced security and performance settings
+    sourcemap: false, // Disable source maps in production for security
     minify: 'terser',
     terserOptions: {
       compress: {
@@ -36,6 +35,7 @@ export default defineConfig({
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'markdown-vendor': ['react-markdown', 'react-syntax-highlighter', 'remark-gfm'],
+          'ui-vendor': ['lucide-react'],
         },
       },
     },

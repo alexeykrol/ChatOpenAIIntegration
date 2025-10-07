@@ -16,6 +16,12 @@ try {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+export interface TokenUsage {
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -49,6 +55,7 @@ export type Database = {
           role: 'user' | 'assistant';
           content: string;
           created_at: string;
+          token_usage?: TokenUsage;
         };
         Insert: {
           id?: string;
@@ -56,6 +63,7 @@ export type Database = {
           role: 'user' | 'assistant';
           content: string;
           created_at?: string;
+          token_usage?: TokenUsage;
         };
         Update: {
           id?: string;
@@ -63,6 +71,7 @@ export type Database = {
           role?: 'user' | 'assistant';
           content?: string;
           created_at?: string;
+          token_usage?: TokenUsage;
         };
       };
       user_settings: {
