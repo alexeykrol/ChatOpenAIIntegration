@@ -48,12 +48,15 @@ export const Settings: React.FC = () => {
   };
 
   const handleApiKeyChange = (value: string) => {
-    setFormData(prev => ({ ...prev, openai_api_key: value }));
+    // Sanitize input: remove any HTML tags or dangerous characters
+    const sanitizedValue = value.replace(/<[^>]*>/g, '').trim();
+
+    setFormData(prev => ({ ...prev, openai_api_key: sanitizedValue }));
     setKeyValid(null);
-    
+
     // Debounce validation
     const timeoutId = setTimeout(() => {
-      validateApiKey(value);
+      validateApiKey(sanitizedValue);
     }, 1000);
 
     return () => clearTimeout(timeoutId);
@@ -117,6 +120,8 @@ export const Settings: React.FC = () => {
                 value={formData.openai_api_key}
                 onChange={(e) => handleApiKeyChange(e.target.value)}
                 placeholder="sk-..."
+                maxLength={200}
+                autoComplete="off"
                 className="w-full px-4 py-3 pr-20 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
               <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">

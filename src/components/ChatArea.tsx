@@ -43,9 +43,10 @@ export const ChatArea: React.FC = () => {
     e.preventDefault();
     if (!input.trim() || isGenerating || !settings?.openai_api_key) return;
 
-    const message = input.trim();
+    // Sanitize input: trim whitespace and limit length
+    const message = input.trim().slice(0, 10000); // Limit to 10k characters
     setInput('');
-    
+
     // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
@@ -282,6 +283,7 @@ export const ChatArea: React.FC = () => {
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
+              maxLength={10000}
               className="w-full resize-none border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               style={{ minHeight: '52px', maxHeight: '200px' }}
               disabled={isGenerating}
