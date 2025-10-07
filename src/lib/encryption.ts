@@ -43,7 +43,7 @@ class SimpleEncryption {
       // Parse hex string back to bytes
       let decrypted = '';
       for (let i = 0; i < encryptedText.length; i += 2) {
-        const hexByte = encryptedText.substr(i, 2);
+        const hexByte = encryptedText.substring(i, i + 2);
         const encryptedByte = parseInt(hexByte, 16);
         
         // Check if parsing was successful

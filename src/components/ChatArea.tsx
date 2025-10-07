@@ -44,14 +44,25 @@ export const ChatArea: React.FC = () => {
     if (!input.trim() || isGenerating || !settings?.openai_api_key) return;
 
     const message = input.trim();
+
+    // Input validation
+    const MAX_MESSAGE_LENGTH = 10000;
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      console.error('Message too long');
+      return;
+    }
+
+    // Sanitize message - remove any potentially dangerous characters
+    const sanitizedMessage = message.replace(/[\x00-\x08\x0B-\x0C\x0E-\x1F\x7F]/g, '');
+
     setInput('');
-    
+
     // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
     }
 
-    await sendMessage(message);
+    await sendMessage(sanitizedMessage);
   };
 
   const handleCopyMessage = async (messageId: string, content: string) => {
