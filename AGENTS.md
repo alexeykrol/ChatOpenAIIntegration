@@ -441,41 +441,6 @@ applyMigration();
 
 ---
 
-## 🧠 MaaS (Memory as a Service) Integration
-
-### Architecture
-- **MaaS is a separate microservice** with independent Supabase database
-- **Communication via webhook/API** - not direct integration
-- **n8n for prototyping** pipeline before coding
-- **Located in:** `MaaS/` directory
-
-### Key Files
-```bash
-MaaS/
-├── README.md                          # MaaS documentation
-├── docs/
-│   ├── MaaS.md                       # Full specification
-│   ├── MaaS_IMPLEMENTATION_PLAN.md   # Implementation plan
-│   └── CONTEXT_OPTIMIZATION.md       # Optimization patterns
-├── schemas/
-│   └── 001_initial_schema.sql        # Database schema
-└── scripts/
-    └── create_maas_tables.mjs        # Table creation
-```
-
-### Rules for MaaS Work
-- ❌ **Don't mix** with main project - it's a separate service
-- ✅ **Test in n8n** before writing code
-- ✅ **Document API contracts** between services
-- ✅ **Use webhooks** for communication
-
-### MaaS Supabase Access
-- **Project:** MaaS (org: Alexey Krol)
-- **URL:** https://litybpjfpjphvsczslrt.supabase.co
-- **Status:** Database structure created, ready for n8n integration
-
----
-
 ## 📝 Sprint Workflow
 
 See **WORKFLOW.md** for detailed sprint processes, including:

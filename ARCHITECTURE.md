@@ -72,18 +72,6 @@ supabase/
 └── migrations/           # SQL migrations
     ├── 003_add_retrieval_module.sql
     └── 004_add_personality_summarization.sql ✨
-
-MaaS/ ✨                  # Memory as a Service (separate microservice)
-├── README.md              # MaaS documentation
-├── docs/                  # Specifications and plans
-│   ├── MaaS.md           # Full specification
-│   ├── MaaS_IMPLEMENTATION_PLAN.md
-│   └── CONTEXT_OPTIMIZATION.md
-├── schemas/              # Database SQL schemas
-│   └── 001_initial_schema.sql
-├── scripts/              # Database scripts
-│   └── create_maas_tables.mjs
-└── n8n/                  # n8n workflows
 ```
 
 ---
@@ -303,35 +291,6 @@ Chat Messages Accumulate →
 - Previous summary context for continuity
 - LLM-based fact extraction and merging
 - Deduplication and consolidation
-
-### MaaS Module (v1.5) ✨
-**Purpose:** Memory as a Service - independent microservice
-
-**Architecture:**
-- Separate Supabase project with own database
-- Communication via webhook/API (not direct integration)
-- n8n workflow for pipeline prototyping
-- Project URL: https://litybpjfpjphvsczslrt.supabase.co
-
-**Database Schema (9 tables):**
-- `projects` - MaaS projects
-- `facts` - Extracted facts from conversations
-- `decisions` - Decisions made in projects
-- `sources` - Source tracking
-- `relationships` - Entity relationships
-- `context_windows` - Optimized context delivery
-- `maas_settings` - Service configuration
-- `processing_queue` - Async processing queue
-- `audit_log` - Change tracking
-
-**Workflow:**
-```
-Main App Chat → Webhook → n8n Pipeline →
-├── MaaS API receives message data
-├── Fact extraction and processing
-├── Storage in MaaS database
-└── Context optimization and delivery
-```
 
 ---
 

@@ -78,58 +78,11 @@
 - `SummaryDatabaseService` - database operations
 - Algorithm: incremental summarization with context, deduplication, fact merging
 
-### ✅ Version 1.5 - MaaS (Memory as a Service)
-**Released:** 2025-01-31
-**Status:** Complete (Infrastructure ready, integration pending)
-
-- [x] **MaaS microservice architecture** - independent service design
-- [x] **Separate Supabase project** - dedicated database
-- [x] **Full database schema** - 9 tables for comprehensive memory management
-  - [x] `projects` - MaaS project management
-  - [x] `facts` - extracted facts from conversations
-  - [x] `decisions` - decision tracking
-  - [x] `sources` - source attribution
-  - [x] `relationships` - entity relationships
-  - [x] `context_windows` - optimized context delivery
-  - [x] `maas_settings` - service configuration
-  - [x] `processing_queue` - async task queue
-  - [x] `audit_log` - change tracking
-- [x] **Documentation** - comprehensive MaaS specs and implementation plan
-- [x] **n8n preparation** - ready for workflow integration
-
-**Technical Details:**
-- Separate Supabase: https://litybpjfpjphvsczslrt.supabase.co
-- Communication: webhook/API (not direct database integration)
-- n8n for pipeline prototyping before code implementation
-- Located in `MaaS/` directory
-
 ---
 
 ## 🚧 In Progress
 
-### Version 1.6 - MaaS Integration
-**Target:** Next sprint
-**Status:** Planning
-
-- [ ] **n8n workflow** - create MaaS processing pipeline
-  - [ ] Message ingestion from main app
-  - [ ] Fact extraction pipeline
-  - [ ] Context optimization logic
-  - [ ] Response delivery workflow
-- [ ] **Webhook integration** - connect main app to MaaS
-  - [ ] Webhook endpoint in main app
-  - [ ] Secure authentication between services
-  - [ ] Error handling and retry logic
-- [ ] **Testing** - end-to-end MaaS pipeline validation
-  - [ ] Single message processing
-  - [ ] Multi-turn conversation handling
-  - [ ] Fact extraction accuracy
-  - [ ] Context delivery optimization
-
-**Dependencies:**
-- MaaS database (✅ complete)
-- n8n instance setup
-- Webhook security strategy
+Currently no features in active development.
 
 ---
 
@@ -372,11 +325,10 @@
 
 ## 📊 Feature Metrics
 
-### Version 1.5 Statistics
+### Version 1.4 Statistics
 - **Total Features Implemented:** 35+
-- **Database Tables:** 15+ (main app) + 9 (MaaS)
+- **Database Tables:** 15+ (main app)
 - **API Integrations:** OpenAI Assistants, Files, Embeddings
-- **Microservices:** 2 (main app, MaaS)
 - **Lines of Code:** ~5000+ (estimated)
 
 ---
@@ -384,15 +336,15 @@
 ## 🎯 Roadmap Priorities
 
 ### Next 3 Sprints
-1. **Sprint 1:** MaaS n8n integration + webhook setup
-2. **Sprint 2:** Function calling for assistants
-3. **Sprint 3:** Export/import chats + advanced file types
+1. **Sprint 1:** Function calling for assistants
+2. **Sprint 2:** Export/import chats + advanced file types
+3. **Sprint 3:** Memory analytics dashboard
 
 ### This Quarter Goals
-- Complete MaaS integration and testing
 - Implement function calling
 - Add comprehensive analytics dashboard
 - Improve test coverage to 60%+
+- Enhanced summarization algorithm
 
 ### Long-term Vision
 - Multi-user collaboration platform
