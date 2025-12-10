@@ -77,6 +77,8 @@
 
 ### Недавно завершено
 
+- [x] Fix Framework /ui command — workarounds для ES modules, express deps (2025-12-10)
+- [x] Bug Report — документирование 5 багов Framework (2025-12-10)
 - [x] Legacy Migration — полный анализ проекта и генерация Framework файлов (2025-12-09)
 - [x] Инициализация Claude Code Starter Framework (2025-12-09)
 - [x] Security headers в vite.config.ts

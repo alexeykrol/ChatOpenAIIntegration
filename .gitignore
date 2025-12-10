@@ -24,3 +24,8 @@ push_git.sh
 *.sln
 *.sw?
 .env
+
+# Claude dialogs
+dialog/2025-12-09_session-581cb8a8.md
+dialog/2025-12-09_session-e301e7e3.md
+dialog/2025-12-09_session-22d13eb4.md
